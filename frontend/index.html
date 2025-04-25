@@ -1,37 +1,185 @@
 <!DOCTYPE html>
-
 <html lang="pt-br">
-  <head>
-    <title>Real Chat</title>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>RealChat - Websockets</title>
     <link rel="stylesheet" href="styles.css">
-  </head>
-  
-  <body>
-    <div class="center">
-      <h1>Amazing Chat Application</h1>
-      <h3 id="chat-header">Currently in chat: general</h3>
+    <style>
+        /* Estilo aprimorado */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #1e1e2f;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-      <form id="chatroom-selection">
-        <label for="chatroom">Chatroom:</label>
-        <input type="text" name="chatroom" id="chatroom"> <br><br>
-        <input type="submit" value="Change chatroom">
-      </form>
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: #2a2a3b;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
 
-      <br>
+        .login-section {
+            background: #3a3a4f;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #444;
+        }
 
-      <textarea class="messagearea" id="chatmessages" readonly name="chatmessages" rows="4" cols="50" placeholder="Welcome to chatroom"></textarea>
+        .login-section input[type="text"],
+        .login-section input[type="password"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #444;
+            color: #fff;
+        }
 
-      <br>
+        .login-section input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #5a5aff;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
-      <form id="chatroom-message">
-        <label for="messages">Message:</label>
-        <input type="text" id="message" name="message"> <br><br>
-        <input type="submit" value="Send message">
-      </form>
+        .login-section input[type="submit"]:hover {
+            background: #4a4ae6;
+        }
+
+        .chat-section {
+            padding: 20px;
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .chat-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #5a5aff;
+        }
+
+        .chat-header h3 {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #aaa;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #444;
+            color: #fff;
+        }
+
+        .form-group input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #5a5aff;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background: #4a4ae6;
+        }
+
+        .messagearea {
+            width: calc(100% - 20px);
+            height: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: #fff;
+            resize: none;
+            margin-bottom: 20px;
+            overflow-y: auto;
+        }
+
+        .messagearea::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .messagearea::-webkit-scrollbar-thumb {
+            background: #5a5aff;
+            border-radius: 5px;
+        }
+
+        .messagearea::-webkit-scrollbar-thumb:hover {
+            background: #4a4ae6;
+        }
+
+        #send-message-button, #change-chatroom-button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Login Section -->
+        <div class="login-section">
+            <form id="login-form">
+                <h2>Login</h2>
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="chat-section">
+            <div class="chat-header">
+                <h1>Amazing Chat Application</h1>
+                <h3 id="chat-header">Currently in chat: general</h3>
+                <h3 id="connection-header">Connected to Websocket: false</h3>
+            </div>
+
+            <form id="chatroom-selection" class="form-group">
+                <label for="chatroom">Chatroom:</label>
+                <input type="text" id="chatroom" name="chatroom" placeholder="Enter chatroom name">
+                <input type="submit" value="Change chatroom" id="change-chatroom-button">
+            </form>
+
+            <textarea class="messagearea" id="chatmessages" readonly name="chatmessages"
+                placeholder="Welcome to the general chatroom, here messages from others will appear"></textarea>
+
+            <form id="chatroom-message" class="form-group">
+                <label for="message">Message:</label>
+                <input type="text" id="message" name="message" placeholder="Type your message">
+                <input type="submit" value="Send message" id="send-message-button">
+            </form>
+        </div>
     </div>
-
     <script src="main.js"></script>
-  
-  </body>
-</html>
+</body>
 
+</html>
