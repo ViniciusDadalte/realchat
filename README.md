@@ -59,7 +59,7 @@ go run *.go
 
 4. Acesse no navegador:
 ```bash
-http://localhost:8080
+https://localhost:8080
 ```
 
 5. Faça login com um dos usuários e:
