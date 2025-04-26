@@ -29,7 +29,7 @@ Você pode criar e entrar em qualquer sala só escrevendo o nome. Se a sala não
 ---
 ## 📸 Demonstração
 
-[🎥 Clique para ver o vídeo](./docs/video.mp4)
+https://github.com/user-attachments/assets/76b9f1e9-b32b-41a8-8c12-e5d444801a66
 
 ---
 ## 🧰 Tecnologias Usadas
